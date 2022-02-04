@@ -1,0 +1,21 @@
+name = "RuralABM"
+uuid = "09e222b7-cde5-4769-b6c9-aa9fbd304a8a"
+authors = ["Pistrix <grif1718@vandals.uidaho.edu>"]
+version = "0.1.0"
+
+[deps]
+Agents = "46ada45e-f475-11e8-01d0-f70cc89e6671"
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+GLMakie = "e9467ef8-e4e7-5192-8a1a-b1aee30e663a"
+Graphs = "86223c79-3864-5bf0-83f7-82e725a168b6"
+InteractiveDynamics = "ec714cd0-5f51-11eb-0b6e-452e7367ff84"
+JLD = "4138dd39-2aa7-5051-a626-17a0bb65d9c8"
+Match = "7eb4fadd-790c-5f42-8a69-bfa0b872bfbf"
+MetaGraphs = "626554b9-1ddb-594c-aa3c-2596fe9399a5"
+Parameters = "d96e819e-fc66-5662-9728-84c9c7592b0a"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
+SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+XLSX = "fdbf4ff8-1666-58a4-91e7-1b58723a45e0"
