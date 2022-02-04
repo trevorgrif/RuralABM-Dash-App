@@ -392,7 +392,7 @@ callback!(
     if iszero(clicks)
         throw(PreventUpdate())
     end
-    model = construct_town("../ABM_Input/Town_Data/abm_cityoutput_Dubois_ID_10_mile_income_ind.csv", "../ABM_Input/Business_Data/Dubois_Idaho_10mile_biz.csv")
+    model = construct_town("ABM_Input/Town_Data/abm_cityoutput_Dubois_ID_10_mile_income_ind.csv", "ABM_Input/Business_Data/Dubois_Idaho_10mile_biz.csv")
 
     #Turn off/on community gatherings
     if length(do_comm_gaths) == 0
