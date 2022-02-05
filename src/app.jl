@@ -1,19 +1,20 @@
-using Genie
-using Genie.Router
+using Dash
 
-function launchServer(port)
+app = dash()
 
-    Genie.config.run_as_server = true
-    Genie.config.server_host = "0.0.0.0"
-    Genie.config.server_port = port
-
-    println("port set to $(port)")
-
-    route("/") do
-        "Hi there!"
-    end
-
-    Genie.AppServer.startup()
+app.layout = html_div() do
+    html_h1("Hello Dash"),
+    html_div("Dash: A web application framework for your data."),
+    dcc_graph(
+        id = "example-graph-1",
+        figure = (
+            data = [
+                (x = ["giraffes", "orangutans", "monkeys"], y = [20, 14, 23], type = "bar", name = "SF"),
+                (x = ["giraffes", "orangutans", "monkeys"], y = [12, 18, 29], type = "bar", name = "Montreal"),
+            ],
+            layout = (title = "Dash Data Visualization", barmode="group")
+        )
+    )
 end
 
-launchServer(parse(Int, ARGS[1]))
+run_server(app, "0.0.0.0", port=parse(Int, ARGS[1]), debug=true)
