@@ -1,0 +1,50 @@
+.slider-label {
+   position: absolute;
+   left: 710px;
+   top: 250px;
+   transform: rotate(90deg);
+}
+
+.slider {
+   position: relative;
+   left: -20px;
+}
+
+.table-adj{
+   position: relative;
+   left: 10px;
+}
+
+.comm-gath-value-adj{
+   position: relative;
+   left: 200px;
+}
+
+.comm-gath-label-adj{
+   position: relative;
+   left: -40px;
+}
+
+.table-col-1{
+   width: 250px;
+   align: center;
+}
+
+.table-col-2{
+   width: 450px;
+   align: center;
+}
+
+.table-col-3{
+   width: 250px;
+   align: center;
+}
+
+.test-class{
+   width: 250px;
+}
+
+.model-ss-style{
+   position: relative;
+   left: 40px;
+}
