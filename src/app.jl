@@ -96,112 +96,126 @@ app = dash(external_stylesheets=[dbc_themes.DARKLY],assets_folder="assets/")
 Layout Variables
 ============================================================#
 
-construct_town_variables = html_div(className = "table-col-1") do
-    dbc_button("Build Town", id = "build-town", n_clicks = 0,size = "sm", style = Dict("margin" => "auto", "display" => "block")),
-    html_br(),
-    dbc_inputgroup(size = "sm") do
-        dbc_inputgrouptext("Run Length"),
-        dbc_input(id = "construct-length-input", type = "number", value = 30, style = Dict("text-align" => "right"))
-    end,
-    html_br(),
-    dbc_checklist(
-        options = [
-            Dict("label" => "Community Gathering", "value" => 1),
-        ],
-        value = [1],
-        input_class_name="comm-gath-value-adj",
-        label_class_name="comm-gath-label-adj",
-        id = "construct_comm_gath_switch",
-        switch = true,
-    )
+function get_construct_town_variables()
+    construct_town_variables = html_div(className = "table-col-1") do
+        dbc_button("Build Town", id = "build-town", n_clicks = 0,size = "sm", style = Dict("margin" => "auto", "display" => "block")),
+        html_br(),
+        dbc_inputgroup(size = "sm") do
+            dbc_inputgrouptext("Run Length"),
+            dbc_input(id = "construct-length-input", type = "number", value = 30, style = Dict("text-align" => "right"))
+        end,
+        html_br(),
+        dbc_checklist(
+            options = [
+                Dict("label" => "Community Gathering", "value" => 1),
+            ],
+            value = [1],
+            input_class_name="comm-gath-value-adj",
+            label_class_name="comm-gath-label-adj",
+            id = "construct_comm_gath_switch",
+            switch = true,
+        )
+    end
 end
 
-network_graph = html_div(className = "table-col-2") do
-    dcc_graph(id="network-graph",figure=blank_network_graph())
+function get_network_graph()
+    network_graph = html_div(className = "table-col-2") do
+        dcc_graph(id="network-graph",figure=blank_network_graph())
+    end
 end
 
-network_graph_slider = html_div() do
-    dbc_label("Weight Filtration",color="secondary", className="slider-label"),
-    html_div(
-        dcc_slider(
-             id="min_w_slider_input",
-             min = 0.025,
-             max = 0.525,
-             step = 0.025,
-             value = 0.025,
-             vertical = true,
-             verticalHeight = 300,
-             tooltip=Dict("placement" => "bottom", "always_visible" => false)
+function get_network_graph_slider()
+    network_graph_slider = html_div() do
+        dbc_label("Weight Filtration",color="secondary", className="slider-label"),
+        html_div(
+            dcc_slider(
+                 id="min_w_slider_input",
+                 min = 0.025,
+                 max = 0.525,
+                 step = 0.025,
+                 value = 0.025,
+                 vertical = true,
+                 verticalHeight = 300,
+                 tooltip=Dict("placement" => "bottom", "always_visible" => false)
+            ),
+            className = "slider"
         ),
-        className = "slider"
-    ),
-    html_div(id = "min_w_slider_display")
-end
-
-network_ss = html_div(className = "table-col-3") do
-    dbc_listgroup(horizontal = true) do
-        dbc_listgroupitem("Nodes"),
-        dbc_listgroupitem(0,id="SS_Nodes")
-    end,
-    html_br(),
-    dbc_listgroup(horizontal = true) do
-        dbc_listgroupitem("Edges"),
-        dbc_listgroupitem(0,id="SS_Edges")
-    end,
-    html_br(),
-    dbc_listgroup(horizontal = true) do
-        dbc_listgroupitem("Density"),
-        dbc_listgroupitem("0.000",id="SS_Density")
-    end,
-    html_br(),
-    dbc_listgroup(horizontal = true) do
-        dbc_listgroupitem("Conn. Components"),
-        dbc_listgroupitem(0,id="SS_ConnComp")
+        html_div(id = "min_w_slider_display")
     end
 end
 
-run_model_variables = html_div(className = "table-col-1") do
-    dbc_button("Run Model", id = "run-model", n_clicks = 0, size = "sm", disabled = true, style = Dict("margin" => "auto", "display" => "block")),
-    html_br(),
-    dbc_inputgroup(size = "sm") do
-        dbc_inputgrouptext("Run Length"),
-        dbc_input(id = "model-length-input", type = "number", min = 0, value = 100, style = Dict("text-align" => "right"))
-    end,
-    html_br(),
-    dbc_inputgroup(size = "sm") do
-        dbc_inputgrouptext("Seeds"),
-        dbc_input(id = "model-seed-input", type = "number", min = 1, value = 3, style = Dict("text-align" => "right"))
-    end,
-    html_br(),
-    dbc_inputgroup(size = "sm") do
-        dbc_inputgrouptext("Proportion Masked"),
-        dbc_input(id = "model-mask-input", type = "number", min = 0, max = 100, value = 0, style = Dict("text-align" => "right"))
-    end,
-    html_br(),
-    dbc_inputgroup(size = "sm") do
-        dbc_inputgrouptext("Proportion Vaccinated"),
-        dbc_input(id = "model-vacc-input", type = "number", min = 0, max = 100, value = 0, style = Dict("text-align" => "right"))
+function get_network_ss()
+    network_ss = html_div(className = "table-col-3") do
+        dbc_listgroup(horizontal = true) do
+            dbc_listgroupitem("Nodes"),
+            dbc_listgroupitem(0,id="SS_Nodes")
+        end,
+        html_br(),
+        dbc_listgroup(horizontal = true) do
+            dbc_listgroupitem("Edges"),
+            dbc_listgroupitem(0,id="SS_Edges")
+        end,
+        html_br(),
+        dbc_listgroup(horizontal = true) do
+            dbc_listgroupitem("Density"),
+            dbc_listgroupitem("0.000",id="SS_Density")
+        end,
+        html_br(),
+        dbc_listgroup(horizontal = true) do
+            dbc_listgroupitem("Conn. Components"),
+            dbc_listgroupitem(0,id="SS_ConnComp")
+        end
     end
 end
 
-infection_graph = html_div(className = "table-col-2") do
-    dcc_graph(id="infection-graph",figure=blank_model_graph())
+function get_run_model_variables()
+    run_model_variables = html_div(className = "table-col-1") do
+        dbc_button("Run Model", id = "run-model", n_clicks = 0, size = "sm", disabled = true, style = Dict("margin" => "auto", "display" => "block")),
+        html_br(),
+        dbc_inputgroup(size = "sm") do
+            dbc_inputgrouptext("Run Length"),
+            dbc_input(id = "model-length-input", type = "number", min = 0, value = 100, style = Dict("text-align" => "right"))
+        end,
+        html_br(),
+        dbc_inputgroup(size = "sm") do
+            dbc_inputgrouptext("Seeds"),
+            dbc_input(id = "model-seed-input", type = "number", min = 1, value = 3, style = Dict("text-align" => "right"))
+        end,
+        html_br(),
+        dbc_inputgroup(size = "sm") do
+            dbc_inputgrouptext("Proportion Masked"),
+            dbc_input(id = "model-mask-input", type = "number", min = 0, max = 100, value = 0, style = Dict("text-align" => "right"))
+        end,
+        html_br(),
+        dbc_inputgroup(size = "sm") do
+            dbc_inputgrouptext("Proportion Vaccinated"),
+            dbc_input(id = "model-vacc-input", type = "number", min = 0, max = 100, value = 0, style = Dict("text-align" => "right"))
+        end
+    end
 end
 
-model_run_ss = html_div(className = "table-col-3 model-ss-style") do
-    dbc_listgroup(horizontal = true) do
-        dbc_listgroupitem("Infected"),
-        dbc_listgroupitem(0,id="SS_Infected")
-    end,
-    html_br(),
-    dbc_listgroup(horizontal = true) do
-        dbc_listgroupitem("Recovered"),
-        dbc_listgroupitem(0,id="SS_Recovered")
-    end,
-    html_br(),
-    dbc_listgroup(horizontal = true) do
-        dbc_listgroupitem("Day of Peak"),
-        dbc_listgroupitem(0,id="SS_DayOfPeak")
+function get_infection_graph()
+    infection_graph = html_div(className = "table-col-2") do
+        dcc_graph(id="infection-graph",figure=blank_model_graph())
+    end
+end
+
+function get_model_run_ss()
+    model_run_ss = html_div(className = "table-col-3 model-ss-style") do
+        dbc_listgroup(horizontal = true) do
+            dbc_listgroupitem("Infected"),
+            dbc_listgroupitem(0,id="SS_Infected")
+        end,
+        html_br(),
+        dbc_listgroup(horizontal = true) do
+            dbc_listgroupitem("Recovered"),
+            dbc_listgroupitem(0,id="SS_Recovered")
+        end,
+        html_br(),
+        dbc_listgroup(horizontal = true) do
+            dbc_listgroupitem("Day of Peak"),
+            dbc_listgroupitem(0,id="SS_DayOfPeak")
+        end
     end
 end
 
@@ -210,38 +224,50 @@ Main App Layout
 ============================================================#
 
 # Table head construction
-table_head = dbc_row(dbc_col(html_div("Rural ABM", className="float-right")))
+function get_table_head()
+    table_head = dbc_row(dbc_col(html_div("Rural ABM", className="float-right")))
+end
 
 # Table row_1 construction
-row_1 = html_div() do
-    dbc_row(align = "center") do
-        dbc_col(construct_town_variables),
-        dbc_col(network_graph),
-        dbc_col(network_graph_slider, width = "auto"),
-        dbc_col(network_ss)
+function get_row_1()
+    row_1 = html_div() do
+        dbc_row(align = "center") do
+            dbc_col(get_construct_town_variables()),
+            dbc_col(get_network_graph()),
+            dbc_col(get_network_graph_slider(), width = "auto"),
+            dbc_col(get_network_ss())
+        end
     end
 end
 
 # Table row_2 construction
-row_2 = html_div() do
-    dbc_row(align = "center") do
-        dbc_col(run_model_variables),
-        dbc_col(infection_graph),
-        dbc_col(model_run_ss)
+function get_row_2()
+    row_2 = html_div() do
+        dbc_row(align = "center") do
+            dbc_col(get_run_model_variables()),
+            dbc_col(get_infection_graph()),
+            dbc_col(get_model_run_ss())
+        end
     end
 end
 
-table = html_div(className = "table-adj") do
-    table_head,
-    row_1,
-    row_2
+function get_table()
+    table = html_div(className = "table-adj") do
+        get_table_head(),
+        get_row_1(),
+        get_row_2()
+    end
 end
 
 # App layout construction
-app.layout = html_div() do
-    dcc_store(id="model_container"),
-    table
+function set_app_layout()
+    app.layout = html_div() do
+        dcc_store(id="model_container"),
+        get_table()
+    end
 end
+
+set_app_layout()
 
 #============================================================
 ----------------------- Callbacks ---------------------------
@@ -411,4 +437,5 @@ end
 #============================================================
 ----------------------- Run Server --------------------------
 ============================================================#
-run_server(app, "0.0.0.0", parse(Int, ARGS[1]),debug=true)
+#run_server(app, "0.0.0.0", parse(Int, ARGS[1]),debug=true)
+run_server(app, "0.0.0.0",debug=true)
