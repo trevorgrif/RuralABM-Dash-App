@@ -67,7 +67,7 @@ function agent_step!(adult::Adult, model)
         end
     end
     # Update infection parameters and statistics
-    if adult.status ∉ [:S,:R,:V]
+    if adult.status ∉ (:S,:R,:V)
         adult.time_infected += 1//12
         recover_or_die!(adult,model)
     end
@@ -107,7 +107,7 @@ function agent_step!(geezer::Retiree,model)
     end
 
     # Update infection parameters and statistics
-    if geezer.status ∉ [:S,:R,:V]
+    if geezer.status ∉ (:S,:R,:V)
         geezer.time_infected += 1//12
         recover_or_die!(geezer,model)
     end
@@ -143,7 +143,7 @@ function agent_step!(child::Child, model)
     end
 
     # Update infection parameters and statistics
-    if child.status ∉ [:S,:R,:V]
+    if child.status ∉ (:S,:R,:V)
         (child.time_infected += 1//12)
         recover_or_die!(child,model)
     end
@@ -438,7 +438,7 @@ higher contact count with the agent.
 function get_friend(agent,model)
     friend_ids = get_living_contacts(agent,model)
 
-    # Selecting a random contact with a bias towards contacts with higher interaction counts
+    # Selecting a rando@am contact with a bias towards contacts with higher interaction counts
     friend_ids = Multinomial(1,friend_ids/sum(friend_ids)) |> rand
 
     # Return agent of selected contact
@@ -452,7 +452,7 @@ contacts and 0 for dead contacts.
 ============================================================#
 function get_living_contacts(agent,model)
     # Set length of Id_List and instansiate with 0s
-    Id_List = SparseVector(zeros(size(agent.contact_list)))
+    Id_List = spzeros(size(agent.contact_list))
 
     # Filter out dead contacts
     for index in filter(x -> x ∉ model.DeadAgents.Agent,agent.contact_list.nzind)
