@@ -1,4 +1,5 @@
 /src/RuralABM
+/src/RuralABM/src
 /src/assets
-/src/ABM_Input
-/src/app_old.jl
+/src/ABM_Input/Business_Data
+/src/ABM_Input/Town_Data
