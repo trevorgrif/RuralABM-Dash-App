@@ -1,8 +1,7 @@
 module RuralABM
-export Connected_Components, Plot_Adj_Matrix, switch_off_comm_gaths!, seed_contagen!, Serialize_Model, Deserialize_Model, construct_town, run_model!, save_model, load_model, Household_Adjacency_Matrix, Adjacency_Matrix, update_agents_attribute!, get_portion_random, get_portion_watts
+export Connected_Components, Plot_Adj_Matrix, switch_off_comm_gaths!, seed_contagen!, Serialize_Model, Deserialize_Model, run_model!, save_model, load_model, Household_Adjacency_Matrix, Adjacency_Matrix, update_agents_attribute!, get_portion_random, get_portion_watts
 
     using Parameters
-    using JLD, XLSX, CSV
     using Agents
     using Graphs, MetaGraphs
     using DataFrames
@@ -17,7 +16,6 @@ export Connected_Components, Plot_Adj_Matrix, switch_off_comm_gaths!, seed_conta
     include("Interface.jl")
     include("AgentBehavior.jl")
     include("Distribute.jl")
-    include("Town.jl")
     include("Watts.jl")
     include("Matrices.jl")
     include("Network.jl")

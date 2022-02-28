@@ -2,12 +2,11 @@
 -------------------------- Modules --------------------------
 ============================================================#
 # External Modules
-using DataFrames, Dash, DashBootstrapComponents, PlotlyJS
-using Plots: RGBA
+#using DataFrames, Dash, DashBootstrapComponents, PlotlyJS
 
 # Local Modules
-include("RuralABM/src/RuralABM.jl")
-using .RuralABM
+#include("RuralABM/src/RuralABM.jl")
+#using .RuralABM
 
 #============================================================
 ------------------- Helper Functions ------------------------
@@ -48,8 +47,8 @@ function network_graph_layout()
                 showarrow=false,
                 xaxis=attr(showgrid=false, zeroline=false, showticklabels=false),
                 yaxis=attr(showgrid=false, zeroline=false, showticklabels=false),
-                paper_bgcolor= RGBA(0,0,0,0),
-                plot_bgcolor= RGBA(0,0,0,0),
+                paper_bgcolor= :transparent,
+                plot_bgcolor= :transparent,
                 height = 450,
                 width = 450
             )
@@ -66,8 +65,8 @@ function model_graph_layout()
                 ),
                 xaxis_title = "Days",
                 yaxis_title = "Case Count",
-                paper_bgcolor= RGBA(0,0,0,0),
-                plot_bgcolor= RGBA(0,0,0,0),
+                paper_bgcolor= :transparent,
+                plot_bgcolor= :transparent,
                 height = 450,
                 width = 450
             )
@@ -338,8 +337,8 @@ callback!(
                     ),
                     xaxis_title = "Days",
                     yaxis_title = "Case Count",
-                    paper_bgcolor= RGBA(0,0,0,0),
-                    plot_bgcolor= RGBA(0,0,0,0),
+                    paper_bgcolor= :transparent,
+                    plot_bgcolor= :transparent,
                     height = 450,
                     width = 550
                     )
@@ -393,8 +392,8 @@ callback!(
                     showarrow=false,
                     xaxis=attr(showgrid=false, zeroline=false, showticklabels=false),
                     yaxis=attr(showgrid=false, zeroline=false, showticklabels=false),
-                    paper_bgcolor= RGBA(0,0,0,0),
-                    plot_bgcolor= RGBA(0,0,0,0),
+                    paper_bgcolor= :transparent,
+                    plot_bgcolor= :transparent,
                     height = 450,
                     width = 450
                     )
@@ -418,7 +417,11 @@ callback!(
     if iszero(clicks)
         throw(PreventUpdate())
     end
-    model = construct_town("ABM_Input/Town_Data/abm_cityoutput_Dubois_ID_10_mile_income_ind.csv", "ABM_Input/Business_Data/Dubois_Idaho_10mile_biz.csv")
+
+    open("src\\model_base.txt") do file
+        model_ser = read(file, String)
+    end
+    model = Deserialize_Model(model_ser)
 
     #Turn off/on community gatherings
     if length(do_comm_gaths) == 0
@@ -437,5 +440,4 @@ end
 #============================================================
 ----------------------- Run Server --------------------------
 ============================================================#
-#run_server(app, "0.0.0.0", parse(Int, ARGS[1]),debug=true)
 run_server(app, "0.0.0.0",debug=true)

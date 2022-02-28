@@ -31,10 +31,6 @@ function run_model!(model, days::Int; savepath="")
     return data, mdata
 end
 
-function construct_town(filepath1, filepath2)
-    build_town(filepath1, filepath2)
-end
-
 function save_model(filepath, model)
     AgentsIO.save_checkpoint(filepath, model)
 end
