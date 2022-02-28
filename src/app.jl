@@ -2,11 +2,11 @@
 -------------------------- Modules --------------------------
 ============================================================#
 # External Modules
-#using DataFrames, Dash, DashBootstrapComponents, PlotlyJS
+using DataFrames, Dash, DashBootstrapComponents, PlotlyJS
 
 # Local Modules
-#include("RuralABM/src/RuralABM.jl")
-#using .RuralABM
+include("RuralABM/src/RuralABM.jl")
+using .RuralABM
 
 #============================================================
 ------------------- Helper Functions ------------------------
