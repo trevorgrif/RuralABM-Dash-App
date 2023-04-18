@@ -16,7 +16,7 @@ function update_agents_attr!(model, id_arr, attr::Symbol, new_value)
 end
 
 function turn_comm_gaths_off!(model)
-    model.behavior_parameters = Behavior_parameters(
+    model.behavior_parameters = Build_Behavior_Parameters(
         Adult_Community_Gathering = [0.0, 0.0, 0.0, 0.0, 1.0],
         Child_Community_Gathering = [0.0, 0.0, 0.0, 0.0, 1.0],
         Retiree_Community_Gathering = [0.0, 0.0, 0.0, 0.0, 1.0])

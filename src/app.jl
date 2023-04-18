@@ -5,15 +5,13 @@
 using DataFrames, Dash, DashBootstrapComponents, PlotlyJS
 
 # Local Modules
-include("RuralABM/src/RuralABM.jl")
-using .RuralABM
+using RuralABM
 
 #============================================================
 ------------------- Helper Functions ------------------------
 ============================================================#
 function start_run(model, numdays)
-    data, mdata = run_model!(model, numdays)
-    return data
+    return Run_Model!(model, duration = numdays)[2] 
 end
 
 function generate_html_table(dataframe, max_rows = 10)
@@ -129,10 +127,10 @@ function get_network_graph_slider()
         html_div(
             dcc_slider(
                  id="min_w_slider_input",
-                 min = 0.025,
-                 max = 0.525,
-                 step = 0.025,
-                 value = 0.025,
+                 min = 0.0,
+                 max = 200.0,
+                 step = 20.0,
+                 value = 40.0,
                  vertical = true,
                  verticalHeight = 300,
                  tooltip=Dict("placement" => "bottom", "always_visible" => false)
@@ -306,9 +304,9 @@ callback!(
 
     # Run Model with all variables storing results in DataFrame
     model = Deserialize_Model(model_ser)
-    update_agents_attribute!(model, get_portion_random(model, por_mask/100), :will_mask, [true, true, true])
-    update_agents_attribute!(model, get_portion_random(model, por_vacc/100), :status, :V)
-    seed_contagen!(model, seed_num)
+    Update_Agents_Attribute!(model, Get_Portion_Random(model, por_mask/100), :will_mask, [true, true, true])
+    Update_Agents_Attribute!(model, Get_Portion_Random(model, por_vacc/100), :status, :V)
+    Seed_Contagion!(model, seed_num = seed_num)
     AgentData = start_run(model, numdays)
 
     # Parse the DataFrames
@@ -418,18 +416,18 @@ callback!(
         throw(PreventUpdate())
     end
 
-    open("src\\model_base.txt") do file
+    open("src/model_base.txt") do file
         model_ser = read(file, String)
     end
     model = Deserialize_Model(model_ser)
 
     #Turn off/on community gatherings
     if length(do_comm_gaths) == 0
-        switch_off_comm_gaths!(model)
+        Switch_Off_Community_Gatherings!(model)
     end
 
     # Create a social network by running the model for run_length
-    run_model!(model, run_length)
+    Run_Model!(model, duration = run_length)
 
     # Serialize the model to store in dcc_store
     model_ser = Serialize_Model(model)
@@ -440,5 +438,5 @@ end
 #============================================================
 ----------------------- Run Server --------------------------
 ============================================================#
-run_server(app, "0.0.0.0", parse(Int,ARGS[1]))
-#run_server(app, "0.0.0.0", debug=true)
+# run_server(app, "0.0.0.0", parse(Int,ARGS[1]))
+run_server(app, "0.0.0.0", debug=true)

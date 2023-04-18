@@ -23,7 +23,9 @@ export
     Adjacency_Matrix,
     Update_Agents_Attribute!,
     Get_Portion_Random,
-    Get_Portion_Watts
+    Get_Portion_Watts,
+    Connected_Components,
+    Plot_Adj_Matrix
 
     using Distributed
     using Parameters
@@ -39,6 +41,7 @@ export
     using PlotlyJS, Printf, Plots
     using LinearAlgebra
     using Ripserer
+    using GraphPlot
 
     include("Structs.jl")
     include("Interface.jl")
@@ -48,6 +51,7 @@ export
     include("Matrices.jl")
     include("Analysis.jl")
     include("PlotABM.jl")
+    include("Network.jl")
 
     ## Unused and probably broken
     #include("Ideologies.jl")

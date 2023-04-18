@@ -1,7 +1,9 @@
 function plot_adj_matrix(model, min_w)
     # Generate graph object from adjacency matrix
-    M = Get_Adjacency_Matrix(model)
+    M = get_adjacency_matrix(model)
+    max_w = maximum(M)
     G = graph_from_adj(M)
+    
 
     # Filter out edges with weight < min_w
     for edge in collect(edges(G))
@@ -11,7 +13,8 @@ function plot_adj_matrix(model, min_w)
     end
 
     # Apply layout algorithm to graph
-    pos_x, pos_y = spring_layout(G,5.0)
+    # pos_x, pos_y = spring_layout(G,5.0)
+    pos_x, pos_y = GraphPlot.spring_layout(G, C = 1, INITTEMP = 0.8)
 
     # Create plot points
     edge_x = []
@@ -26,18 +29,6 @@ function plot_adj_matrix(model, min_w)
 
     # Initialize graph data vector
     graph_data = GenericTrace{Dict{Symbol, Any}}[]
-
-    # Find max weight in matrix
-    max_w = 0.0
-    num_agents = Int(sqrt(length(M)))
-    for i in 1:num_agents-1
-        for j in i+1:num_agents
-            temp_w = M[i,j]
-            if max_w < temp_w
-                max_w = temp_w
-            end
-        end
-    end
 
     # Create edges
     for edge in edges(G)
@@ -73,14 +64,14 @@ function plot_adj_matrix(model, min_w)
 end
 
 function get_connected_components(model;min_w = 0)
-    M = Get_Adjacency_Matrix(model)
+    M = get_adjacency_matrix(model)
     G = graph_from_adj(M,min_w= min_w)
     return connected_components(G)
 end
 
 function graph_from_adj(M; min_w = 0)
     # Intialize variables
-    num_agents = Int(sqrt(length(M)))
+    num_agents = size(M,1)
     G = SimpleGraph(num_agents)
 
     # Create Graph object

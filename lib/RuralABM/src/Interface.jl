@@ -160,3 +160,15 @@ end
 function Deserialize_Model(model)
     deserialize(IOBuffer(base64decode(model)))
 end
+
+#===========================================================
+------------------ Experimental Methods  -------------------
+===========================================================#
+
+function Connected_Components(model; min_w = 0)
+    get_connected_components(model; min_w = 0)
+end
+
+function Plot_Adj_Matrix(model; min_w = 0)
+    plot_adj_matrix(model, min_w)
+end
